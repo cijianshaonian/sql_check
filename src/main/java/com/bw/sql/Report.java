@@ -48,4 +48,13 @@ public class Report {
     public void setSql(String sql) {
         this.sql = sql;
     }
+
+    @Override
+    public String toString() {
+        return "Report{" +
+                "pass=" + pass +
+                ", msg='" + msg + '\'' +
+                ", sql='" + sql + '\'' +
+                '}';
+    }
 }

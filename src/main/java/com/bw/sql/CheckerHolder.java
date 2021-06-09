@@ -25,4 +25,8 @@ public class CheckerHolder {
     public static  Map<String,Checker> getCheckers(){
         return checkers;
     }
+
+    public static Checker getChecker(SqlType sqlType){
+        return checkers.get(sqlType.toString());
+    }
 }

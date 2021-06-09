@@ -1,8 +1,9 @@
 package com.bw.sql;
 
-import com.alibaba.druid.sql.ast.statement.SQLColumnPrimaryKey;
-import com.alibaba.druid.sql.ast.statement.SQLCommentStatement;
+import com.alibaba.druid.sql.ast.statement.*;
 import com.alibaba.druid.sql.visitor.SQLASTVisitorAdapter;
+
+import java.util.List;
 
 /**
  * @Description
@@ -10,6 +11,20 @@ import com.alibaba.druid.sql.visitor.SQLASTVisitorAdapter;
  * @Created by wangbing
  */
 public class CommentSQLASTVisitor extends SQLASTVisitorAdapter {
+
+    public void endVisit(SQLAlterTableAddColumn x){
+        List<SQLColumnDefinition> columns = x.getColumns();
+        System.out.println("colums");
+    }
+    @Override
+    public void endVisit(SQLAlterTableStatement x) {
+        System.out.println("SQLAlterTableStatement");
+    }
+
+    @Override
+    public void endVisit(SQLAlterTableAddConstraint x) {
+        System.out.println("SQLAlterTableAddConstraint");
+    }
 
     @Override
     public void endVisit(SQLCommentStatement x) {

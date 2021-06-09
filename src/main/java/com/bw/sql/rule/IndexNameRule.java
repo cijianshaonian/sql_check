@@ -18,7 +18,7 @@ public class IndexNameRule extends CheckRule{
 
     @Override
     public List<SqlType> scope() {
-        return Lists.newArrayList(SqlType.CREATE_TABLE);
+        return Lists.newArrayList(SqlType.CREATE_TABLE,SqlType.ALTER_TABLE);
     }
 
     @Override
@@ -27,25 +27,31 @@ public class IndexNameRule extends CheckRule{
     }
 
     @Override
-    protected void initVisitor() {
-        druidSqlAstVisitor = new DruidSqlAstVisitor(){
+    public DruidSqlAstVisitor initVisitor() {
+        return new DruidSqlAstVisitor(){
             public void endVisit(SQLCreateTableStatement x) {
                 List<SQLTableElement> tableElementList = x.getTableElementList();
                 long count = tableElementList.stream()
                         .filter(sqlTableElement -> sqlTableElement instanceof MySqlKey && !(sqlTableElement instanceof MySqlPrimaryKey))
                         .filter(sqlTableElement -> {
                     MySqlKey key = (MySqlKey) sqlTableElement;
-                    return !key.getName().getSimpleName().startsWith("idx");
+                    return (!key.getName().getSimpleName().startsWith("idx") && !key.getName().getSimpleName().startsWith("`idx"));
                 }).count();
                 this.setPass(count == 0);
             }
 
             public void endVisit(SQLAlterTableAddIndex x){
-                setPass(x.getName().getSimpleName().startsWith("idx"));
+                String indexName = x.getName().getSimpleName();
+                if(!indexName.startsWith("idx") && !indexName.startsWith("`idx")){
+                    setPass(false);
+                }
             }
 
             public void endVisit(SQLCreateIndexStatement x){
-                setPass(x.getName().getSimpleName().startsWith("idx"));
+                String indexName = x.getName().getSimpleName();
+                if(!indexName.startsWith("idx") && !indexName.startsWith("`idx")){
+                    setPass(false);
+                }
             }
         };
     }

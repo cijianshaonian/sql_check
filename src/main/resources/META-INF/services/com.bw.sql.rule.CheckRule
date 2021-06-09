@@ -1,0 +1,6 @@
+com.bw.sql.rule.ColumnCommentNotNullRule
+com.bw.sql.rule.IndexNameRule
+com.bw.sql.rule.TableCommentNotNullRule
+com.bw.sql.rule.TableEngineRule
+com.bw.sql.rule.TableForeignKeyRule
+com.bw.sql.rule.TablePrimaryKeyNotNullRule

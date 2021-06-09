@@ -14,16 +14,12 @@ import java.util.List;
  */
 public abstract class CheckRule {
 
-    protected DruidSqlAstVisitor druidSqlAstVisitor;
-    public CheckRule() {
-        initVisitor();
-    }
-
     /**
      * @param ast 抽象语法树
      * @return 规则检查报告
      */
     public Report match(DruidAst ast){
+        DruidSqlAstVisitor druidSqlAstVisitor = initVisitor();
         SQLStatement sqlStatement = ast.getSqlStatement();
         sqlStatement.accept(druidSqlAstVisitor);
         return new Report(druidSqlAstVisitor.isPass(),getMSg(),ast.getSql());
@@ -37,7 +33,5 @@ public abstract class CheckRule {
 
     public abstract String getMSg();
 
-    protected void initVisitor(){
-
-    }
+    public abstract DruidSqlAstVisitor initVisitor();
 }

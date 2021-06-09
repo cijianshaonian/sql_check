@@ -25,13 +25,10 @@ public class TableCommentNotNullRule extends CheckRule{
     }
 
     @Override
-    protected void initVisitor() {
-        druidSqlAstVisitor = new DruidSqlAstVisitor(){
+    public DruidSqlAstVisitor initVisitor() {
+        return new DruidSqlAstVisitor(){
             public void endVisit(SQLCreateTableStatement x) {
-                if(x.getComment() == null){
-                    this.setPass(false);
-                }
-                this.setPass(true);
+                setPass(x.getComment() != null);
             }
         };
     }

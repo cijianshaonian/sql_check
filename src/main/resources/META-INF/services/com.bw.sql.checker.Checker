@@ -1,0 +1,2 @@
+com.bw.sql.checker.AlterTableChecker
+com.bw.sql.checker.CreateTableChecker

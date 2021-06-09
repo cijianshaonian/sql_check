@@ -6,5 +6,6 @@ public enum SqlType {
     DELETE,
     INSERT,
     CREATE_TABLE,
+    ALTER_TABLE,
     OTHER;
 }
